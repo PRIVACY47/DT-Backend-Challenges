@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Nudge documentation
+  description: This is a sample documentation reflecting task-2 in the process of hiring a backend developer by DT
+  contact:
+    email: eesashaik03@gmail.com
+  version: 1.0.11
+
+servers:
+  - url: http://localhost:8000/api/v3/app
+    description : localserver
+
+
+tags:
+  - name: Nudge
+
+paths:
+  /nudge:
+    summary: Nudge creation
+    post:
+      tags:
+        - Nudge
+      summary: Store nudge to the database
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Nudge'
+      responses:
+        '200':
+          description: Successful creation of nudge
+        '500':
+          description: Internal server error
+          
+    get:
+      tags:
+        - Nudge
+      summary: Get nudge from the database
+      responses:
+        '200':
+          description: Successful retrieval of nudge
+        '500':
+          description: Internal server error
+    
+  /nudge/{id}:      
+    get:
+      tags:
+        - Nudge
+      summary: Get nudge by ID from the database
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the nudge to retrieve
+      responses:
+        '200':
+          description: Successful retrieval of nudge
+        '500':
+          description: Internal server error
+  
+    put:
+      tags:
+        - Nudge
+      summary: Update nudge by ID in the database
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: ID of the nudge to update
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Nudge'        
+      responses:
+        '200':
+          description: Successful update of nudge
+        '500':
+          description: Internal server error
+    
+    delete:
+      tags:
+        - Nudge
+      summary: Delete nudge by its Id
+      parameters:
+        - in: path
+          name : id
+          schema:
+            type: string
+          required: true
+          description : Id of the nudge to delete
+      responses:
+        '200':
+          description: Successfully deleated nudge
+        '500':
+          description: Internal server error      
+          
+components:
+  schemas:
+    Nudge:
+      type: object
+      required:
+        - tagline
+        - title
+        - image
+        - schedule
+        - description
+        - icon
+        - invitation
+      properties:
+        tagline:
+          type: string
+        title:
+          type: string
+        image:
+          type: string
+          format: binary
+        schedule:
+          type: string
+          format: date-time
+        description:
+          type: string
+        icon:
+          type: string
+          format: binary
+        invitation:
+          type: string
